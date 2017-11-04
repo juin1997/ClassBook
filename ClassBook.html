@@ -10,6 +10,45 @@
 
 //刘晓部分
 //李嘉群部分
+//全选功能
+  function fun_all(obj){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       x[i].checked=obj.checked;
+       if(obj.checked==true){
+         x[i].parentNode.parentNode.style.color="blue";
+       }else{
+         x[i].parentNode.parentNode.style.color="black";
+       }
+    }
+  }
+
+  //字体变色
+  function fun_change(obj){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       if(x[i].checked){
+          x[i].parentNode.parentNode.style.color="blue";
+       }else{
+          x[i].parentNode.parentNode.style.color="black";
+       }
+    }
+  }
+
+  //删除功能
+  function fun_delete(){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       
+       if(x[i].checked){
+         x[i].parentNode.parentNode.parentNode.removeChild(x[i].parentNode.parentNode);
+         fun_delete();
+       }
+    }
+  }
 </script>
 </head>
 <body><center><h3>同学录</h3>
