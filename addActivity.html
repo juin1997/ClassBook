@@ -10,7 +10,56 @@
   //提交数据
   function fun(){
     var array=new Array();
-//王国超部分
+   if(document.getElementById("text1").value!=""){
+         array[0]=document.getElementById("text1").value;
+      }else{
+         alert("姓名不能为空，请输入！");
+         document.getElementById("text1").focus();
+         return(false);
+      }
+      if(document.getElementById("text2").value!=""){
+         array[1]=document.getElementById("text2").value;
+      }else{
+         alert("住址不能为空，请输入！");
+         document.getElementById("text2").focus();
+         return(false);
+      }      
+      if(document.getElementById("text3").value!=""){
+         array[2]=document.getElementById("text3").value;
+      }else{
+         alert("电话不能为空，请输入！");
+         document.getElementById("text3").focus();
+         return(false);
+      }
+      if(document.getElementById("text4").value!=""){
+         array[3]=document.getElementById("text4").value;
+      }else{
+         alert("微信不能为空，请输入！");
+         document.getElementById("text4").focus();
+         return(false);
+      }
+      if(document.getElementById("text5").value!=""){
+         array[4]=document.getElementById("text5").value;
+      }else{
+         alert("邮箱不能为空，请输入！");
+         document.getElementById("text5").focus();
+         return(false);
+      }
+      if(document.getElementById("text6").value!=""){
+         array[5]=document.getElementById("text6").value;
+      }else{
+         alert("QQ不能为空，请输入！");
+         document.getElementById("text6").focus();
+         return(false);
+      }
+      if(document.getElementById("text7").value!=""){
+         array[6]=document.getElementById("text7").value;
+      }else{
+         alert("个性语言不能为空，请输入！");
+         document.getElementById("text7").focus();
+         return(false);
+      }
+
     window.returnValue = array;
     window.close();
   }
