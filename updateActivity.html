@@ -9,7 +9,56 @@
   
   function fun(){
    var array=new Array();
-//����������
+   if(document.getElementById("text1").value!=""){
+         array[0]=document.getElementById("text1").value;
+      }else{
+         alert("姓名不能为空，请输入！");
+         document.getElementById("text1").focus();
+         return(false);
+      }
+      if(document.getElementById("text2").value!=""){
+         array[1]=document.getElementById("text2").value;
+      }else{
+         alert("住址不能为空，请输入！");
+         document.getElementById("text2").focus();
+         return(false);
+      }      
+      if(document.getElementById("text3").value!=""){
+         array[2]=document.getElementById("text3").value;
+      }else{
+         alert("电话不能为空，请输入！");
+         document.getElementById("text3").focus();
+         return(false);
+      }
+      if(document.getElementById("text4").value!=""){
+         array[3]=document.getElementById("text4").value;
+      }else{
+         alert("微信不能为空，请输入！");
+         document.getElementById("text4").focus();
+         return(false);
+      }
+      if(document.getElementById("text5").value!=""){
+         array[4]=document.getElementById("text5").value;
+      }else{
+         alert("邮箱不能为空，请输入！");
+         document.getElementById("text5").focus();
+         return(false);
+      }
+      if(document.getElementById("text6").value!=""){
+         array[5]=document.getElementById("text6").value;
+      }else{
+         alert("QQ不能为空，请输入！");
+         document.getElementById("text6").focus();
+         return(false);
+      }
+      if(document.getElementById("text7").value!=""){
+         array[6]=document.getElementById("text7").value;
+      }else{
+         alert("个性语言不能为空，请输入！");
+         document.getElementById("text7").focus();
+         return(false);
+      }
+
       window.returnValue = array;
       window.close();
   }
@@ -17,13 +66,13 @@
 </script>
 </head>
 <body>
- ��&nbsp;&nbsp;����&nbsp;&nbsp;<input type="text" id="text1" /><br>
- ס&nbsp;&nbsp;ַ��&nbsp;&nbsp;<input type="text" id="text2" /><br>
- ��&nbsp;&nbsp;����&nbsp;&nbsp;<input type="text" id="text3" /><br>
- ΢&nbsp;&nbsp;�ţ�&nbsp;&nbsp;<input type="text" id="text4" /><br>
- ��&nbsp;&nbsp;�䣺&nbsp;&nbsp;<input type="text" id="text5" /><br>
- Q&nbsp;&nbsp;&nbsp;&nbsp;Q��&nbsp;&nbsp;<input type="text" id="text6" /><br>
- �������ԣ�<input type="text" id="text7" /><br>
-  <input type="button" value="�ύ" onclick="fun();" />
+ 姓&nbsp;&nbsp;名：&nbsp;&nbsp;<input type="text" id="text1" /><br>
+ 住&nbsp;&nbsp;址：&nbsp;&nbsp;<input type="text" id="text2" /><br>
+ 电&nbsp;&nbsp;话：&nbsp;&nbsp;<input type="text" id="text3" /><br>
+ 微&nbsp;&nbsp;信：&nbsp;&nbsp;<input type="text" id="text4" /><br>
+ 邮&nbsp;&nbsp;箱：&nbsp;&nbsp;<input type="text" id="text5" /><br>
+ Q&nbsp;&nbsp;&nbsp;&nbsp;Q：&nbsp;&nbsp;<input type="text" id="text6" /><br>
+ 个性语言：<input type="text" id="text7" /><br>
+  <input type="button" value="提交" onclick="fun();" />
 </body>
 </html>
