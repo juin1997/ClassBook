@@ -224,8 +224,19 @@
         }
 
 //刘晓部分
+        //添加按钮
+        var add=document.getElementById("add");
+        add.onclick=function(){
+            var box=document.getElementById("box");
+            var check_box=document.getElementById("check_box");
+            var add_button=document.getElementById("add_button");
+            var change_button=document.getElementById("change_button");
 
-
+            box.setAttribute("style","display:block;");
+            check_box.setAttribute("style","display:none");
+            add_button.setAttribute("style","display:block;");
+            change_button.setAttribute("style","display:none");
+        }
         //添加功能  发送json数据
         //确认添加事件   点击确认添加输入框消失，表格增加一行
         // 调用添加接口
