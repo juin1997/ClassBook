@@ -6,10 +6,9 @@
 <script>
   var str="";
   var obj=null;
-
-  //提交数据
+  
   function fun(){
-    var array=new Array();
+   var array=new Array();
    if(document.getElementById("text1").value!=""){
          array[0]=document.getElementById("text1").value;
       }else{
@@ -60,9 +59,10 @@
          return(false);
       }
 
-    window.returnValue = array;
-    window.close();
+      window.returnValue = array;
+      window.close();
   }
+  
 </script>
 </head>
 <body>
