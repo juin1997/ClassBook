@@ -365,6 +365,28 @@
         }
 
 //李嘉群部分
+            //修改函数  调用修改接口
+        function change() {
+            var box=document.getElementById("box");
+            var check_box=document.getElementById("check_box");
+            var add_button=document.getElementById("add_button");
+            var change_button=document.getElementById("change_button");
+
+            box.setAttribute("style","display:block;");
+            check_box.setAttribute("style","display:none");
+            add_button.setAttribute("style","display:none;");
+            change_button.setAttribute("style","display:block");
+
+            my_name.value = this.parentNode.parentNode.cells[0].firstChild.textContent;
+            my_address.value = this.parentNode.parentNode.cells[1].firstChild.textContent;
+            my_phone.value = this.parentNode.parentNode.cells[2].firstChild.textContent;
+            my_wechat.value = this.parentNode.parentNode.cells[3].firstChild.textContent;
+            my_mail.value = this.parentNode.parentNode.cells[4].firstChild.textContent;
+            my_qq.value = this.parentNode.parentNode.cells[5].firstChild.textContent;
+            my_note.value = this.parentNode.parentNode.cells[6].firstChild.textContent;
+
+            var id = this.parentNode.parentNode.cells[2].firstChild.innerHTML;
+
 
             //确认修改事件
             var change_button = document.getElementById("change_button");
