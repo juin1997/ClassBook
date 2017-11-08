@@ -1,0 +1,414 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同学录</title>
+
+    <!--css样式表-->
+    <style>
+        .top{
+            width: 1400px;
+            margin-bottom: 20px;
+            height: 80px;
+            background-color:dodgerblue;
+            line-height: 80px;
+            font-size: 40px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .container{
+            width: 1400px;
+            margin:0 auto;
+        }
+        thead{
+            text-align: center;
+            font-family:"隶书";
+            font-size: 26px;
+        }
+        tbody{
+            font-family:"微软雅黑";
+        }
+        td{
+            overflow: hidden;
+        }
+        .left{
+            width: 1000px;
+            float: left;
+        }
+        .right{
+            width: 300px;
+            float: left;
+            margin-left: 100px;
+        }
+        .right input{
+            display: block;
+            margin-top: 16px;
+        }
+        .info li ,#check_box li{
+            list-style-type: none;
+            margin: 20px 0;
+        }
+        .info li span{
+            display: block;
+            width: 80px;
+            float: left;
+        }
+        #check_box li{
+            display: block;
+        }
+        #phone_num{
+            float: left;
+            margin: 20px 20px 10px 20px;
+        }
+        #excel{
+            clear: both;
+        }
+        .button{
+            width: 120px;
+            height: 35px;
+            font-size: 20px;
+            margin:0 15px;
+            border:solid 2px dodgerblue;
+            border-radius:10px;
+            color: dodgerblue;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top">同 学 录</div>
+    <div class="left">
+        <table class="info_table" id="mytable" border="1" cellspacing="0" cellpadding="0">
+            <colgroup>
+                <col width="100"/>
+                <col width="500"/>
+                <col width="150"/>
+                <col width="150"/>
+                <col width="170"/>
+                <col width="150"/>
+                <col width="300"/>
+                <col width="80"/>
+                <col width="80"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <td>姓名</td>
+                <td>家庭住址</td>
+                <td>电话</td>
+                <td>微信</td>
+                <td>邮箱</td>
+                <td>QQ</td>
+                <td>个性语言</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="right">
+        <input type="button" value="添加" id="add" class="button">
+        <input type="text" placeholder="请输入手机号进行查询" value="" id="phone_num">
+        <input type="button" value="查询" id="check_button" class="button">
+        <input type="button" value="导出为Excel文件" id="excel" class="button">
+        <div id="box" style="display: none;">
+            <ul class="info">
+                <li><span>姓名：</span><input type="text" name="name" id="my_name"></li>
+                <li><span>家庭住址: </span><input type="text" name="address" id="my_address"></li>
+                <li><span>电话: </span><input type="text" name="phone" id="my_phone"></li>
+                <li><span>微信: </span><input type="text" name="wechat" id="my_wechat"></li>
+                <li><span>邮箱: </span><input type="text" name="mail" id="my_mail"></li>
+                <li><span>QQ：</span> <input type="text" name="qq" id="my_qq"></li>
+                <li><span>个性语言: </span><input type="text" name="note" id="my_note"></li>
+                <input type="button" value="确认添加" id="add_button">
+                <input type="button" value="确认修改" id="change_button">
+                <!--<input type="button" value="取消" id="cancel_button">-->
+            </ul>
+        </div>
+        <div id="check_box" style="display: none;">
+            <li><span>姓名：</span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>家庭住址: </span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>电话: </span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>微信: </span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>邮箱: </span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>QQ：</span><input type="text" class="check_text" readonly="readonly"></li>
+            <li><span>个性语言: </span><input type="text" class="check_text" readonly="readonly"></li>
+        </div>
+    </div>
+</div>
+
+<!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
+<script>
+    var my_name=document.getElementById("my_name");
+    var my_address=document.getElementById("my_address");
+    var my_phone=document.getElementById("my_phone");
+    var my_wechat=document.getElementById("my_wechat");
+    var my_mail=document.getElementById("my_mail");
+    var my_qq=document.getElementById("my_qq");
+    var my_note=document.getElementById("my_note");
+
+    window.onload=function() {
+        var mytable = document.getElementById("mytable");
+
+        //test
+        
+        //test over
+
+        //初始页面：显示同学录内容
+        var request = new XMLHttpRequest();
+        //调用初始显示接口
+        request.open("GET", "http://97.64.21.155:5001/show", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.onreadystatechange = function () {
+            if (request.readyState == 4) {
+                if (request.status == 200) {
+                    var result = JSON.parse(request.responseText);
+//                        var result = myresult.data;
+                    for (var i = 0; i < result.length; i++) {
+
+                        addRow(result[i]);
+                    }
+                }
+                else{
+                    alert("页面初始化失败");
+                }
+            }
+        }
+        request.send();
+
+        //查询事件  调用查询接口
+        var check_button=document.getElementById("check_button");
+        var phone_num=document.getElementById("phone_num");
+        check_button.onclick=function(){
+            var box=document.getElementById("box");
+            box.setAttribute("style","display:none;");
+            var check_box=document.getElementById("check_box");
+            check_box.setAttribute("style","display:block");
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://97.64.21.155:5001/check", true);
+            xmlhttp.setRequestHeader("Content-type", 'application/json;charset=utf-8');
+            var str = {phone:phone_num.value};
+            var send_message=JSON.stringify(str);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        var data = JSON.parse(xmlhttp.responseText);
+
+                            alert("查询成功");
+                            var box=document.getElementById("box");
+                            box.setAttribute("style","display:none");
+                            var check_box=document.getElementById("check_box");
+                            check_box.setAttribute("style","display:block");
+
+                            var mes=document.getElementsByClassName("check_text");
+                            mes[0].value=data[0].name;
+                            mes[1].value=data[0].address;
+                            mes[2].value=data[0].phone;
+                            mes[3].value=data[0].wechat;
+                            mes[4].value=data[0].mail;
+                            mes[5].value=data[0].qq;
+                            mes[6].value=data[0].note;
+
+                    }
+                    else {
+                        alert("查询失败" + xmlhttp.status);
+                    }
+                }
+            }
+            xmlhttp.send(send_message);
+        }
+
+//刘晓部分
+
+
+        //添加功能  发送json数据
+        //确认添加事件   点击确认添加输入框消失，表格增加一行
+        // 调用添加接口
+        var add_button = document.getElementById("add_button");
+        add_button.onclick = function () {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://97.64.21.155:5001/add", true);
+            xmlhttp.setRequestHeader("Content-type", 'application/json;charset=utf-8');
+            var str = {
+                name:my_name.value,
+                address:my_address.value,
+                phone:my_phone.value,
+                wechat:my_wechat.value,
+                mail:my_mail.value,
+                qq:my_qq.value,
+                note:my_note.value};
+            var send_message=JSON.stringify(str);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    alert(xmlhttp.status);
+                    if (xmlhttp.status == 200) {
+                        var data = JSON.parse(xmlhttp.responseText);
+                        if (data.finished == 'true') {
+                            alert("添加成功");
+                            var myrow = mytable.insertRow(1);
+                            var col_0 = myrow.insertCell(0); //姓名
+                            var col_1 = myrow.insertCell(1); //家庭住址
+                            var col_2 = myrow.insertCell(2); //电话
+                            var col_3 = myrow.insertCell(3); //微信
+                            var col_4 = myrow.insertCell(4); //邮箱
+                            var col_5 = myrow.insertCell(5); //qq
+                            var col_6 = myrow.insertCell(6); //个性语言
+                            var col_7 = myrow.insertCell(7); //修改按钮
+                            var col_8 = myrow.insertCell(8); //删除按钮
+                            col_0.innerHTML = my_name.value;
+                            col_1.innerHTML = my_address.value;
+                            col_2.innerHTML = my_phone.value;
+                            col_3.innerHTML = my_wechat.value;
+                            col_4.innerHTML = my_mail.value;
+                            col_5.innerHTML = my_qq.value;
+                            col_6.innerHTML = my_note.value;
+                            var newbutton2 = document.createElement("input");
+                            newbutton2.setAttribute("type", "button");
+                            newbutton2.setAttribute("value", "修改");
+                            col_7.appendChild(newbutton2);
+                            var newbutton1 = document.createElement("input");
+                            newbutton1.setAttribute("type", "button");
+                            newbutton1.setAttribute("value", "删除");
+                            col_8.appendChild(newbutton1);
+
+                            newbutton1.onclick = remove;
+                            newbutton2.onclick = change;
+
+                            my_name.value ="";
+                            my_address.value = "";
+                            my_phone.value = "";
+                            my_wechat.value = "";
+                            my_mail.value = "";
+                            my_qq.value = "";
+                            my_note.value = "";
+
+
+                            //隐藏输入信息栏
+                            var box=document.getElementById("box");
+                            box.setAttribute("style","display:none");
+                        }
+                    }
+                    else {
+                        alert("添加失败" + xmlhttp.status);
+                    }
+                }
+            }
+            xmlhttp.send(send_message);
+        }
+
+        //同学录新增一行内容
+        function addRow(res) {
+            var myrow = mytable.insertRow(1);
+            var col_0 = myrow.insertCell(0); //姓名
+            var col_1 = myrow.insertCell(1); //家庭住址
+            var col_2 = myrow.insertCell(2); //电话
+            var col_3 = myrow.insertCell(3); //微信
+            var col_4 = myrow.insertCell(4); //邮箱
+            var col_5 = myrow.insertCell(5); //qq
+            var col_6 = myrow.insertCell(6); //个性语言
+            var col_7 = myrow.insertCell(7); //修改按钮
+            var col_8 = myrow.insertCell(8); //删除按钮
+            col_0.innerHTML = res.name;
+            col_1.innerHTML = res.address;
+            col_2.innerHTML = res.phone;
+            col_3.innerHTML = res.wechat;
+            col_4.innerHTML = res.mail;
+            col_5.innerHTML = res.qq;
+            col_6.innerHTML = res.note;
+            var newbutton2 = document.createElement("input");
+            newbutton2.setAttribute("type", "button");
+            newbutton2.setAttribute("value", "修改");
+            col_7.appendChild(newbutton2);
+            var newbutton1 = document.createElement("input");
+            newbutton1.setAttribute("type", "button");
+            newbutton1.setAttribute("value", "删除");
+            col_8.appendChild(newbutton1);
+
+
+            //删除操作
+            newbutton1.onclick = remove;
+            //修改操作
+            newbutton2.onclick = change;
+
+        }
+
+        //删除函数 调用删除接口
+        function remove() {
+            this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+            var id = this.parentNode.parentNode.cells[2].firstChild.textContent;
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://97.64.21.155:5001/delete", true);
+            xmlhttp.setRequestHeader("Content-type", 'application/json;charset=utf-8');
+            alert(id);
+            var str = {"phone":id};
+            var send_message=JSON.stringify(str);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        var data = JSON.parse(xmlhttp.responseText);
+                        if (data.finished == 'true') {
+                            alert("删除成功");
+                        }
+                    }
+                    else {
+                        alert("删除失败" + xmlhttp.status);
+                    }
+                }
+            }
+            xmlhttp.send(send_message);
+        }
+
+//李嘉群部分
+
+            //确认修改事件
+            var change_button = document.getElementById("change_button");
+            change_button.onclick = function () {
+//                alert("修改！");
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", "http://97.64.21.155:5001/change", true);
+                xmlhttp.setRequestHeader("Content-type", 'application/json;charset=utf-8');
+                var str = {
+                    name:my_name.value,
+                    address:my_address.value,
+                    phone:my_phone.value,
+                    wechat:my_wechat.value,
+                    mail:my_mail.value,
+                    qq:my_qq.value,
+                    note:my_note.value};
+                var send_message=JSON.stringify(str);
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200) {
+                            var data = JSON.parse(xmlhttp.responseText);
+                            if (data.finished == 'true') {
+                                alert("修改成功");
+                                this.parentNode.parentNode.cells[0].firstChild.textContent = my_name.value;
+                                this.parentNode.parentNode.cells[1].firstChild.textContent = my_address.value;
+                                this.parentNode.parentNode.cells[2].firstChild.textContent = my_phone.value;
+                                this.parentNode.parentNode.cells[3].firstChild.textContent = my_wechat.value;
+                                this.parentNode.parentNode.cells[4].firstChild.textContent = my_mail.value;
+                                this.parentNode.parentNode.cells[5].firstChild.textContent = my_qq.value;
+                                this.parentNode.parentNode.cells[6].firstChild.textContent = my_note.value;
+                            }
+                        }
+                        else {
+                            alert("修改失败" + xmlhttp.status);
+                        }
+                    }
+                }
+                xmlhttp.send(send_message);
+            }
+        }
+
+//王国超部分
+
+</script>
+
+</body>
+</html>
