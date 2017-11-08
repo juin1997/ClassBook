@@ -337,7 +337,32 @@
 
         }
 
-//叶文滔部分
+        //删除函数 调用删除接口
+        function remove() {
+            this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+            var id = this.parentNode.parentNode.cells[2].firstChild.textContent;
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("POST", "http://97.64.21.155:5001/delete", true);
+            xmlhttp.setRequestHeader("Content-type", 'application/json;charset=utf-8');
+            alert(id);
+            var str = {"phone":id};
+            var send_message=JSON.stringify(str);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        var data = JSON.parse(xmlhttp.responseText);
+                        if (data.finished == 'true') {
+                            alert("删除成功");
+                        }
+                    }
+                    else {
+                        alert("删除失败" + xmlhttp.status);
+                    }
+                }
+            }
+            xmlhttp.send(send_message);
+        }
 
 //李嘉群部分
 
