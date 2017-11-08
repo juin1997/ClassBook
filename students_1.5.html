@@ -405,8 +405,27 @@
                 xmlhttp.send(send_message);
             }
         }
+  //导出为excel文件 调用导出接口
+        var excel=document.getElementById("excel");
+        excel.onclick=function(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "http://97.64.21.155:5001/export 
 
-//王国超部分
+", true);
+            xmlhttp.setRequestHeader("Content-type", "application/json;charset=utf-8");
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4) {
+                    if (xmlhttp.status == 200) {
+                        window.location.replace("http://97.64.21.155:5001/export 
+
+");
+                    }
+                }
+            }
+            xmlhttp.send();
+        }
+    }
+
 
 </script>
 
