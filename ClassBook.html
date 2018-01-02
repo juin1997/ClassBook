@@ -9,7 +9,92 @@
   var obj2=null;
 
 //刘晓部分
+  //添加功能
+  function fun_add(){
+    var result = window.showModalDialog("addActivity.html",null,"dialogWidth:300px;dialogHeigth:300px;");
+    if(result)
+    {
+      var otable=document.getElementById("ta1");
+      var or = otable.insertRow();
+      var oc1 =or.insertCell();
+      var oc2 =or.insertCell();   
+      var oc3 =or.insertCell();
+      var oc4 =or.insertCell();
+      var oc5 =or.insertCell();
+      var oc6 =or.insertCell();
+      var oc7 =or.insertCell();
+      var oc8 =or.insertCell();
+      oc1.innerHTML=result[0];
+      oc2.innerHTML=result[1];
+      oc3.innerHTML=result[2];
+      oc4.innerHTML=result[3];
+      oc5.innerHTML=result[4];
+      oc6.innerHTML=result[5];
+      oc7.innerHTML=result[6];
+      oc8.innerHTML="<input type='checkbox' name='checkname' id='check"+(10+parseInt(Math.random()*90))+"' onclick='fun_change(this);' />";
+      document.body.appendChild(otable);
+    }
+  }
+
+  //修改数据
+  function fun_update(){
+    var x=document.getElementsByName("checkname");
+      for(var i=0;i<x.length;i++)
+      {
+         if(x[i].checked){
+            
+            var onode=x[i].parentNode.parentNode.childNodes;
+            var pass = {win:window,node:onode};
+            var result = window.showModalDialog("updateActivity.html",pass,"dialogWidth:300px;dialogHeight:300px;");
+           if(result){
+               for(var i=0;i<7;i++){
+                 onode[i].innerHTML=result[i];
+               }
+            }
+         }
+       }
+  }
+
 //李嘉群部分
+//全选功能
+  function fun_all(obj){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       x[i].checked=obj.checked;
+       if(obj.checked==true){
+         x[i].parentNode.parentNode.style.color="blue";
+       }else{
+         x[i].parentNode.parentNode.style.color="black";
+       }
+    }
+  }
+
+  //字体变色
+  function fun_change(obj){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       if(x[i].checked){
+          x[i].parentNode.parentNode.style.color="blue";
+       }else{
+          x[i].parentNode.parentNode.style.color="black";
+       }
+    }
+  }
+
+  //删除功能
+  function fun_delete(){
+    var x=document.getElementsByName("checkname");
+    for(var i=0;i<x.length;i++)
+    {
+       
+       if(x[i].checked){
+         x[i].parentNode.parentNode.parentNode.removeChild(x[i].parentNode.parentNode);
+         fun_delete();
+       }
+    }
+  }
 </script>
 </head>
 <body><center><h3>同学录</h3>
